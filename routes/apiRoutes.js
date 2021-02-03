@@ -29,7 +29,7 @@ module.exports = function (app) {
             // Stringify json data
             fs.writeFile('./db/db.json', JSON.stringify(newNotes), (err, data) => {
                 // Pass in json
-                res.json()
+                res.json(newNotes)
             })
         })
     })
@@ -50,7 +50,7 @@ module.exports = function (app) {
             })
             fs.writeFile('./db/db.json', JSON.stringify(results), (err, data) => {
                 // Pass in json
-                res.json()
+                res.json(results)
             })
 
         })
