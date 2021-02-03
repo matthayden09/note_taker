@@ -17,6 +17,8 @@ module.exports = function (app) {
     app.post('/api/notes', function (req, res) {
         // Variable to add notes
         const addNote = req.body
+        // Assign ID using uuid version 4
+        addNote.id = uuid.v4()
         console.log(addNote)
         // Read json data in db.json
         fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -31,8 +33,8 @@ module.exports = function (app) {
             })
         })
     })
-                
-            
+
+
 
     //   * DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
 
@@ -40,20 +42,21 @@ module.exports = function (app) {
         // Read json data in db.json
         fs.readFile('./db/db.json', 'utf8', (err, data) => {
             if (err) throw err;
-            
-            // Target objects (notes) in the db.json array
-            
-            // Parse json data and assign the notes a unique ID
-            
-            // For loop over them
-            
-            // stringify json data
-            
-            // res.json()
+
+            const notes = JSON.parse(data)
+            // Return objects that do not have associated ID
+            let results = notes.filter(obj => {
+                return obj.id !== req.params.id
+            })
+            fs.writeFile('./db/db.json', JSON.stringify(results), (err, data) => {
+                // Pass in json
+                res.json()
+            })
+
         })
     })
 };
-    
+
 
 
 
